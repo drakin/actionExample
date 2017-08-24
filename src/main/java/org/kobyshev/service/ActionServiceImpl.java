@@ -13,7 +13,12 @@ public class ActionServiceImpl implements ActionService {
 
     private ActionDao actionDao;
 
+    public ActionServiceImpl(ActionDao actionDao) {
+        this.actionDao = actionDao;
+    }
+
     public Action addAction(Action action) {
+        if (action == null) return null;
         return this.actionDao.addAction(action);
     }
 
@@ -38,9 +43,5 @@ public class ActionServiceImpl implements ActionService {
     @Transactional
     public List<Action> getLastDayActions() {
         return this.actionDao.getLastActions(Period.DAY);
-    }
-
-    public void setActionDao(ActionDao actionDao) {
-        this.actionDao = actionDao;
     }
 }

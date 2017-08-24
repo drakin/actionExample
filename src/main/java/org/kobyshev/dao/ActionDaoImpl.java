@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.kobyshev.model.Action;
 import org.kobyshev.model.Period;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ public class ActionDaoImpl implements ActionDao {
 
     private SessionFactory sessionFactory;
 
+    public ActionDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public Action addAction(Action action) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -43,7 +47,4 @@ public class ActionDaoImpl implements ActionDao {
         return session.find(Action.class, id);
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

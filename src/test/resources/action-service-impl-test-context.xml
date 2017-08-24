@@ -10,8 +10,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-    <annotation-driven/>
-
     <beans:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
                 destroy-method="close">
         <beans:property name="driverClassName" value="org.h2.Driver"/>

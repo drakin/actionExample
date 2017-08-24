@@ -16,7 +16,7 @@ public class ActionController {
     private ActionService actionService;
 
     @Autowired
-    public void setActionService(ActionService actionService) {
+    public ActionController(ActionService actionService){
         this.actionService = actionService;
     }
 
