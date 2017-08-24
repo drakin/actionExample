@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.kobyshev.model.Action;
 import org.kobyshev.model.Period;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +35,7 @@ public class ActionDaoImpl implements ActionDao {
         calendar.setTime(now);
         calendar.add(period.getValue(), -1);
         return (List<Action>) session.createQuery(
-                "SELECT a FROM Action a WHERE a.actionDate BETWEEN :startDate AND :endDate")
+                "SELECT a FROM Action a WHERE a.actionDate > :startDate AND a.actionDate <= :endDate")
                 .setParameter("startDate", calendar.getTime(), TemporalType.DATE)
                 .setParameter("endDate", now, TemporalType.DATE)
                 .getResultList();
