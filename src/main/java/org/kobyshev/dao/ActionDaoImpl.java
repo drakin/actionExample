@@ -38,6 +38,7 @@ public class ActionDaoImpl implements ActionDao {
                 "SELECT a FROM Action a WHERE a.actionDate > :startDate AND a.actionDate <= :endDate")
                 .setParameter("startDate", calendar.getTime(), TemporalType.DATE)
                 .setParameter("endDate", now, TemporalType.DATE)
+                .setHint("org.hibernate.cacheable", true)
                 .getResultList();
     }
 
