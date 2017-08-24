@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-@Transactional
 public class ActionDaoImpl implements ActionDao {
 
     private SessionFactory sessionFactory;
@@ -22,12 +21,14 @@ public class ActionDaoImpl implements ActionDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Transactional
     public Action addAction(Action action) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(action);
         return action;
     }
 
+    @Transactional(readOnly = true)
     public List<Action> getLastActions(Period period) {
         Session session = this.sessionFactory.getCurrentSession();
         Date now = new Date();
@@ -42,6 +43,7 @@ public class ActionDaoImpl implements ActionDao {
                 .getResultList();
     }
 
+    @Transactional(readOnly = true)
     public Action getActionById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         return session.find(Action.class, id);

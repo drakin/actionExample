@@ -30,17 +30,17 @@ public class ActionServiceImpl implements ActionService {
         return this.actionDao.getLastActions(Period.SECOND);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Action> getLastMinuteActions() {
         return this.actionDao.getLastActions(Period.MINUTE);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Action> getLastHourActions() {
         return this.actionDao.getLastActions(Period.HOUR);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Action> getLastDayActions() {
         return this.actionDao.getLastActions(Period.DAY);
     }
