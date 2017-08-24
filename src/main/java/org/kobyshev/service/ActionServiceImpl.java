@@ -26,22 +26,23 @@ public class ActionServiceImpl implements ActionService {
         return this.actionDao.getActionById(id);
     }
 
-    public List<Action> getLastSecondActions() {
+    @Transactional(readOnly = true)
+    public Long getLastSecondActionsCount() {
         return this.actionDao.getLastActions(Period.SECOND);
     }
 
     @Transactional(readOnly = true)
-    public List<Action> getLastMinuteActions() {
+    public Long getLastMinuteActionsCount() {
         return this.actionDao.getLastActions(Period.MINUTE);
     }
 
     @Transactional(readOnly = true)
-    public List<Action> getLastHourActions() {
+    public Long getLastHourActionsCount() {
         return this.actionDao.getLastActions(Period.HOUR);
     }
 
     @Transactional(readOnly = true)
-    public List<Action> getLastDayActions() {
+    public Long getLastDayActionsCount() {
         return this.actionDao.getLastActions(Period.DAY);
     }
 }

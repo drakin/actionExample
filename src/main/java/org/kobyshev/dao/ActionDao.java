@@ -8,7 +8,7 @@ import java.util.List;
 public interface ActionDao {
     Action addAction(Action action);
 
-    List<Action> getLastActions(Period period);
+    Long getLastActions(Period period);
 
     Action getActionById(int id);
 }

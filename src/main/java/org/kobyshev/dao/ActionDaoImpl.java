@@ -29,18 +29,18 @@ public class ActionDaoImpl implements ActionDao {
     }
 
     @Transactional(readOnly = true)
-    public List<Action> getLastActions(Period period) {
+    public Long getLastActions(Period period) {
         Session session = this.sessionFactory.getCurrentSession();
         Date now = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         calendar.add(period.getValue(), -1);
-        return (List<Action>) session.createQuery(
-                "SELECT a FROM Action a WHERE a.actionDate > :startDate AND a.actionDate <= :endDate")
+        return (Long) session.createQuery(
+                "SELECT count(a) FROM Action a WHERE a.actionDate > :startDate AND a.actionDate <= :endDate")
                 .setParameter("startDate", calendar.getTime(), TemporalType.DATE)
                 .setParameter("endDate", now, TemporalType.DATE)
                 .setHint("org.hibernate.cacheable", true)
-                .getResultList();
+                .uniqueResult();
     }
 
     @Transactional(readOnly = true)

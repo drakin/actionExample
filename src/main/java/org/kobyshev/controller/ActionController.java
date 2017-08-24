@@ -32,28 +32,28 @@ public class ActionController {
     @Async
     @RequestMapping(value = "/action/lastSecond")
     @ResponseBody
-    public CompletableFuture<List<Action>> getLastSecondActions() {
-        return CompletableFuture.supplyAsync(() -> this.actionService.getLastSecondActions());
+    public CompletableFuture<Long> getLastSecondActions() {
+        return CompletableFuture.supplyAsync(() -> this.actionService.getLastSecondActionsCount());
     }
 
     @Async
     @RequestMapping(value = "/action/lastMinute")
     @ResponseBody
-    public CompletableFuture<List<Action>> getLastMinuteActions() {
-        return CompletableFuture.supplyAsync(() -> this.actionService.getLastMinuteActions());
+    public CompletableFuture<Long> getLastMinuteActions() {
+        return CompletableFuture.supplyAsync(() -> this.actionService.getLastMinuteActionsCount());
     }
 
     @Async
     @RequestMapping(value = "/action/lastHour")
     @ResponseBody
-    public CompletableFuture<List<Action>> getLastHourActions() {
-        return CompletableFuture.supplyAsync(() -> this.actionService.getLastHourActions());
+    public CompletableFuture<Long> getLastHourActions() {
+        return CompletableFuture.supplyAsync(() -> this.actionService.getLastHourActionsCount());
     }
 
     @Async
     @RequestMapping(value = "/action/lastDay")
     @ResponseBody
-    public CompletableFuture<List<Action>> getLastDayActions() {
-        return CompletableFuture.supplyAsync(() -> this.actionService.getLastDayActions());
+    public CompletableFuture<Long> getLastDayActions() {
+        return CompletableFuture.supplyAsync(() -> this.actionService.getLastDayActionsCount());
     }
 }

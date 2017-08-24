@@ -10,11 +10,11 @@ public interface ActionService {
 
     Action getAction(int id);
 
-    List<Action> getLastSecondActions();
+    Long getLastSecondActionsCount();
 
-    List<Action> getLastMinuteActions();
+    Long getLastMinuteActionsCount();
 
-    List<Action> getLastHourActions();
+    Long getLastHourActionsCount();
 
-    List<Action> getLastDayActions();
+    Long getLastDayActionsCount();
 }
