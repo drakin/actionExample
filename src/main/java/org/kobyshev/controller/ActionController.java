@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
@@ -26,34 +25,37 @@ public class ActionController {
     @RequestMapping(value = "/action/add", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<Action> addAction(@RequestBody final Action action) {
-        return CompletableFuture.supplyAsync(() -> actionService.addAction(action));
+        return CompletableFuture.supplyAsync(() -> {
+            actionService.addAction(action);
+            return action;
+        });
     }
 
     @Async
     @RequestMapping(value = "/action/lastSecond")
     @ResponseBody
-    public CompletableFuture<Long> getLastSecondActions() {
+    public CompletableFuture<Integer> getLastSecondActions() {
         return CompletableFuture.supplyAsync(() -> this.actionService.getLastSecondActionsCount());
     }
 
     @Async
     @RequestMapping(value = "/action/lastMinute")
     @ResponseBody
-    public CompletableFuture<Long> getLastMinuteActions() {
+    public CompletableFuture<Integer> getLastMinuteActions() {
         return CompletableFuture.supplyAsync(() -> this.actionService.getLastMinuteActionsCount());
     }
 
     @Async
     @RequestMapping(value = "/action/lastHour")
     @ResponseBody
-    public CompletableFuture<Long> getLastHourActions() {
+    public CompletableFuture<Integer> getLastHourActions() {
         return CompletableFuture.supplyAsync(() -> this.actionService.getLastHourActionsCount());
     }
 
     @Async
     @RequestMapping(value = "/action/lastDay")
     @ResponseBody
-    public CompletableFuture<Long> getLastDayActions() {
+    public CompletableFuture<Integer> getLastDayActions() {
         return CompletableFuture.supplyAsync(() -> this.actionService.getLastDayActionsCount());
     }
 }

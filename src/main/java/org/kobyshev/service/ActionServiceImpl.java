@@ -1,48 +1,64 @@
 package org.kobyshev.service;
 
-import org.kobyshev.dao.ActionDao;
 import org.kobyshev.model.Action;
-import org.kobyshev.model.Period;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class ActionServiceImpl implements ActionService {
 
-    private ActionDao actionDao;
+    private final List<Long> actionList = new CopyOnWriteArrayList<>();
 
-    public ActionServiceImpl(ActionDao actionDao) {
-        this.actionDao = actionDao;
+    public void addAction(Action action) {
+        if (action == null) return;
+        getActionList().add(getCurrentTimeMillis());
     }
 
-    public Action addAction(Action action) {
-        if (action == null) return null;
-        return this.actionDao.addAction(action);
-    }
-
-    public Action getAction(int id) {
-        return this.actionDao.getActionById(id);
-    }
-
-    @Transactional(readOnly = true)
-    public Long getLastSecondActionsCount() {
-        return this.actionDao.getLastActions(Period.SECOND);
-    }
-
-    @Transactional(readOnly = true)
-    public Long getLastMinuteActionsCount() {
-        return this.actionDao.getLastActions(Period.MINUTE);
+    private Integer countActions(Integer diffInMillis) {
+        Long currentTime = getCurrentTimeMillis();
+        int binarySearch = Collections.binarySearch(getActionList(), currentTime - diffInMillis);
+        if (binarySearch >= 0) {
+            Long val = getActionList().get(binarySearch);
+            while (binarySearch + 1 < getActionList().size() && Objects.equals(getActionList().get(binarySearch + 1), val)) {
+                binarySearch++;
+            }
+            binarySearch++;
+        } else {
+            binarySearch = -binarySearch - 1;
+        }
+        return getActionList().size() - binarySearch;
     }
 
     @Transactional(readOnly = true)
-    public Long getLastHourActionsCount() {
-        return this.actionDao.getLastActions(Period.HOUR);
+    public Integer getLastSecondActionsCount() {
+        return countActions(1000);
     }
 
     @Transactional(readOnly = true)
-    public Long getLastDayActionsCount() {
-        return this.actionDao.getLastActions(Period.DAY);
+    public Integer getLastMinuteActionsCount() {
+        return countActions(1000 * 60);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getLastHourActionsCount() {
+        return countActions(1000 * 60 * 60);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getLastDayActionsCount() {
+        return countActions(1000 * 60 * 60 * 24);
+    }
+
+    private List<Long> getActionList() {
+        return actionList;
+    }
+
+    private Long getCurrentTimeMillis() {
+        return System.currentTimeMillis();
     }
 }

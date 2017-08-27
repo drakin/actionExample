@@ -2,19 +2,15 @@ package org.kobyshev.service;
 
 import org.kobyshev.model.Action;
 
-import java.util.List;
-
 public interface ActionService {
 
-    Action addAction(Action action);
+    void addAction(Action action);
 
-    Action getAction(int id);
+    Integer getLastSecondActionsCount();
 
-    Long getLastSecondActionsCount();
+    Integer getLastMinuteActionsCount();
 
-    Long getLastMinuteActionsCount();
+    Integer getLastHourActionsCount();
 
-    Long getLastHourActionsCount();
-
-    Long getLastDayActionsCount();
+    Integer getLastDayActionsCount();
 }
