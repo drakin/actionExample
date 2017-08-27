@@ -166,6 +166,15 @@ public class ActionServiceTimeTest {
 
         parameters.add(new Object[]{"Extra values test", 1, "getLastSecondActionsCount", Arrays.asList(secondTmp1, secondTmp2)});
 
+
+        secondCalendar.setTime(NOW);
+        secondCalendar.add(Calendar.MILLISECOND, -1);
+        secondTmp2 = secondCalendar.getTimeInMillis();
+        secondCalendar.add(Calendar.MILLISECOND, 1);
+        secondCalendar.add(Calendar.SECOND, -1);
+        secondTmp1 = secondCalendar.getTimeInMillis();
+        parameters.add(new Object[]{"Extra values boundary test", 1, "getLastSecondActionsCount", Arrays.asList(secondTmp1, secondTmp2)});
+
         return parameters;
     }
 

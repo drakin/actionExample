@@ -21,16 +21,22 @@ public class ActionServiceImpl implements ActionService {
 
     private Integer countActions(Integer diffInMillis) {
         Long currentTime = getCurrentTimeMillis();
+        // Assume that all actions are sorted (they should appended)
         int binarySearch = Collections.binarySearch(getActionList(), currentTime - diffInMillis);
         if (binarySearch >= 0) {
+            // if value presented, it's mean that boundary in list
+            // find the last one if several values are presented.
+            // and exclude them.
             Long val = getActionList().get(binarySearch);
             while (binarySearch + 1 < getActionList().size() && Objects.equals(getActionList().get(binarySearch + 1), val)) {
                 binarySearch++;
             }
             binarySearch++;
         } else {
+            // if value not presented then fix index
             binarySearch = -binarySearch - 1;
         }
+        // return items count between (boundary,last]
         return getActionList().size() - binarySearch;
     }
 
